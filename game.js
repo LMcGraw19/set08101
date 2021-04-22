@@ -1,3 +1,6 @@
+// NOTE!! This js was based off Web Dev Simplified, their repo can be found here -> https://github.com/WebDevSimplified/JavaScript-Text-Adventure
+// Additional comments have been added for the project and all TextNodes + states are specific to this game
+
 const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
 
@@ -46,7 +49,7 @@ function selectOption(option) {
     showTextNode(nextTextNodeId)
 }
 
-// TEXT NODES
+// TEXT NODES!
 const textNodes = [
     {
         id: 1,

@@ -11,6 +11,8 @@
     padding: 0;
 }
 
+
+/* text and body information here */
 body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
@@ -42,6 +44,7 @@ body {
     line-height: 17px;
 }
 
+/* this class allows text to be 'highlighted' */
 .highlight {
     color: rgb(127, 186, 218);
 }
@@ -54,6 +57,8 @@ body {
     margin-right: auto;
 }
 
+
+/* container for the footer */
 .footer {
     position: fixed;
     left: 0;
@@ -67,6 +72,8 @@ body {
     text-align: center;
 }
 
+
+/* start of the responsive navbar */
 #navbar {
     --navbar-height: 64px;
     position: fixed;
@@ -166,6 +173,7 @@ body {
     transform: rotate(-45deg);
 }
 
+/* keeps navbar fixed to the top of the screen and adds a fading transition from the links to the hamburger icon */
 .navbar-menu {
     position: fixed;
     top: var(--navbar-height);
@@ -219,6 +227,7 @@ body {
     box-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Responsive layout - changes the navbar and shows the hamburger icon */
 @media screen and (min-width: 700px) {
     .navbar-toggle {
         display: none;
@@ -251,11 +260,12 @@ body {
     }
 }
 
+/* The following is for the buttons in the game, though being reused here for the 'play game' button */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
     color: #333;
-    text-shadow: none; /* Prevent inheritance from `body` */
+    text-shadow: none;
     background-color: rgb(127, 186, 218);
     border: .05rem solid rgb(127, 186, 218);
     border-radius: 5px;
@@ -263,6 +273,7 @@ body {
     float: right;
 }
 
+/* hover effect for the 'play game' button */
 .btn:hover {
     border-color: black;
     background-color: rgb(92, 141, 193);
