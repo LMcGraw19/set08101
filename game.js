@@ -311,11 +311,11 @@ const textNodes = [
   // 14 part of lounge pathway
   {
     id: 14,
-    text: "",
+    text: "Call it performance anxiety, but you aren't too comfortable walking in and talking to a load of people that you barely know without Diego. You should try to find him first.",
     options: [
       {
-        text: '',
-        nextText: 20
+        text: 'Go back',
+        nextText: 10
       }
     ]
   },
@@ -333,11 +333,11 @@ const textNodes = [
   // 16 part of upper stairs pathway
   {
     id: 16,
-    text: "",
+    text: "Something just isn't right about these stairs... Like it isn't time to climb up them yet.",
     options: [
       {
-        text: '',
-        nextText: 20
+        text: 'Go back',
+        nextText: 11
       }
     ]
   },
@@ -560,6 +560,16 @@ const textNodes = [
     options: [
       {
         text: "BAD END : 'IT WAS ALL A DREAM'",
+        nextText: -1
+      }
+    ]
+  },
+  {
+    id: 31,
+    text: "Stuck in a storm with a murderer on board, you look at Diego's soulless eyes and tell yourself that you will find the killer, no matter what. You just need to do it before you are their next victim.",
+    options: [
+      {
+        text: "DEMO END : 'A MURDERER ON BOARD'",
         nextText: -1
       }
     ]
