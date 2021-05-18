@@ -9,109 +9,111 @@ let state = {}
 
 // Allows new game to start
 function startGame() {
-    state = {}
-    showTextNode(1)
+  state = {}
+  showTextNode(1)
 }
 
 // Allows text container and button to display text within the text node
 function showTextNode(textNodeIndex) {
 
-    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
-    textElement.innerText = textNode.text
-    while (optionButtonsElement.firstChild) {
-      optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+  const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
+  textElement.innerText = textNode.text
+  while (optionButtonsElement.firstChild) {
+    optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+  }
+
+  // Allows user to click button and change the text node displayed
+  textNode.options.forEach(option => {
+    if (showOption(option)) {
+      const button = document.createElement('button')
+      button.innerText = option.text
+      button.classList.add('btn')
+      button.addEventListener('click', () => selectOption(option))
+      optionButtonsElement.appendChild(button)
     }
-  
-    // Allows user to click button and change the text node displayed
-    textNode.options.forEach(option => {
-      if (showOption(option)) {
-        const button = document.createElement('button')
-        button.innerText = option.text
-        button.classList.add('btn')
-        button.addEventListener('click', () => selectOption(option))
-        optionButtonsElement.appendChild(button)
-      }
-    })
+  })
 }
 
 // Shows the required buttons per text node
 function showOption(option) {
-    return option.requiredState == null || option.requiredState(state)
+  return option.requiredState == null || option.requiredState(state)
 }
 
 // Lets user select the option buttons
 function selectOption(option) {
-    const nextTextNodeId = option.nextText
-    if (nextTextNodeId <= 0) {
-      return startGame()
-    }
-    state = Object.assign(state, option.setState)
-    showTextNode(nextTextNodeId)
+  const nextTextNodeId = option.nextText
+  if (nextTextNodeId <= 0) {
+    return startGame()
+  }
+  state = Object.assign(state, option.setState)
+  showTextNode(nextTextNodeId)
 }
 
 // TEXT NODES!
 const textNodes = [
-    {
-        id: 1,
-        text: "'The Sunrise' is a very old ship, this goes without saying, given that it still actually floats on the ocean rather than hovering over the water. It is owned by your old friend Diego Diez who has invited you to join him on a cruise and meet some of his new friends, you really should have learned to say no to him but it was an offer you couldn't refuse.",
-        options: [
-            {
-                text: 'Continue',
-                nextText: 2
-            },
-        ]
-    },
-    {
-        id: 2,
-        text: "You awaken to the harsh screaming and pelting of rain outside your bunk. Great, the ship has sailed right into a storm. The room moves horrifically, and just when you thought it couldn't get any worse your stomach has finally decided that today would be the day that you'd become seasick. Now the question is, should you get up? Or try to go back to sleep?",
-        options: [
-          {
-            text: 'Get up',
-            setState: { unDressed: true},
-            nextText: 3
-          },
-          {
-            text: 'Stay in bed for five more minutes',
-            setState: { sleptIn: true },
-            nextText: 4
-          }
-        ]
-    },
-    {
-        id: 3,
-        text: "The cabin is small and cramped, you might as well compare it to a broom closet, but at least you have some sort of privacy here. There is a small washroom right beside the exit and a wardrobe snugly situated beside the bed. You really should get dressed and see if anyone else is up and about.",
-        options: [
-          {
-            text: 'Go for a shower',
-            nextText: 5
-          },
-          {
-            text: 'Get dressed',
-            requiredState: (currentState) => currentState.unDressed,
-            nextText: 6
-          },
-          {
-            text: 'Leave cabin',
-            requiredState: (currentState) => currentState.dressedCasual,
-            nextText: 9
-          },
-          {
-            text: 'Leave cabin',
-            requiredState: (currentState) => currentState.dressedPractical,
-            nextText: 9
-          }
-        ]
-    },
-    {
-      id: 4,
-      text: "You try your best to ignore the noise and the rolling of your stomach, but it proves fruitless. Tossing and turning, you manage not only to fail at falling asleep but waste your time trying to fall asleep too. Well, you only have one option now.",
-      options: [
-        {
-          text: 'Get up',
-          setState: { unDressed: true},
-          nextText: 3
-        }
-      ]
+  {
+    id: 1,
+    text: "'The Sunrise' is a very old ship, this goes without saying, given that it still actually floats on the ocean rather than hovering over the water. It is owned by your old friend Diego Diez who has invited you to join him on a cruise and meet some of his new friends, you really should have learned to say no to him but it was an offer you couldn't refuse.",
+    options: [
+      {
+        text: 'Continue',
+        nextText: 2
+      },
+    ]
+  },
+  {
+    id: 2,
+    text: "You awaken to the harsh screaming and pelting of rain outside your bunk. Great, the ship has sailed right into a storm. The room moves horrifically, and just when you thought it couldn't get any worse your stomach has finally decided that today would be the day that you'd become seasick. Now the question is, should you get up? Or try to go back to sleep?",
+    options: [
+      {
+        text: 'Get up',
+        setState: { unDressed: true },
+        nextText: 3
+      },
+      {
+        text: 'Stay in bed for five more minutes',
+        setState: { sleptIn: true },
+        nextText: 4
+      }
+    ]
+  },
+  {
+    id: 3,
+    text: "The cabin is small and cramped, you might as well compare it to a broom closet, but at least you have some sort of privacy here. There is a small washroom right beside the exit and a wardrobe snugly situated beside the bed. You really should get dressed and see if anyone else is up and about.",
+    options: [
+      {
+        text: 'Go for a shower',
+        nextText: 5
+      },
+      {
+        text: 'Get dressed',
+        requiredState: (currentState) => currentState.unDressed,
+        nextText: 6
+      },
+      {
+        text: 'Leave cabin',
+        requiredState: (currentState) => currentState.dressedCasual,
+        setState: { hatchClosed: true },
+        nextText: 9
+      },
+      {
+        text: 'Leave cabin',
+        requiredState: (currentState) => currentState.dressedPractical,
+        setState: { hatchClosed: true },
+        nextText: 9
+      }
+    ]
+  },
+  {
+    id: 4,
+    text: "You try your best to ignore the noise and the rolling of your stomach, but it proves fruitless. Tossing and turning, you manage not only to fail at falling asleep but waste your time trying to fall asleep too. Well, you only have one option now.",
+    options: [
+      {
+        text: 'Get up',
+        setState: { unDressed: true },
+        nextText: 3
+      }
+    ]
   },
   {
     id: 5,
@@ -143,7 +145,7 @@ const textNodes = [
     options: [
       {
         text: 'Put on the casual clothes',
-        setState: {dressedCasual: true, unDressed: false},
+        setState: { dressedCasual: true, unDressed: false },
         nextText: 3
       },
       {
@@ -158,7 +160,7 @@ const textNodes = [
     options: [
       {
         text: 'Put on the working clothes',
-        setState: {dressedPractical: true, unDressed: false},
+        setState: { dressedPractical: true, unDressed: false },
         nextText: 3
       },
       {
@@ -181,7 +183,13 @@ const textNodes = [
       },
       {
         text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchClosed,
         nextText: 12
+      },
+      {
+        text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchOpen,
+        nextText: 29
       },
       {
         text: 'Go to engine room',
@@ -213,7 +221,13 @@ const textNodes = [
       },
       {
         text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchClosed,
         nextText: 12
+      },
+      {
+        text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchOpen,
+        nextText: 29
       },
       {
         text: 'Go to engine room',
@@ -239,7 +253,13 @@ const textNodes = [
       },
       {
         text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchClosed,
         nextText: 12
+      },
+      {
+        text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchOpen,
+        nextText: 29
       },
       {
         text: 'Go to engine room',
@@ -254,7 +274,7 @@ const textNodes = [
       {
         text: 'Break the lock',
         requiredState: (currentState) => currentState.haveHammer,
-        setState: {haveHammer: false},
+        setState: { haveHammer: false },
         nextText: 17
       },
       {
@@ -272,7 +292,7 @@ const textNodes = [
       },
       {
         text: 'Go to the second floor',
-        nextText: 12
+        nextText: 11
       },
       {
         text: 'Go to engine room',
@@ -286,7 +306,7 @@ const textNodes = [
     options: [
       {
         text: 'Enter the engine room',
-        setState: {noHammer: true},
+        setState: { noHammer: true },
         nextText: 19
       },
       {
@@ -300,10 +320,15 @@ const textNodes = [
       {
         text: 'Go to the second floor',
         nextText: 11
+      }, {
+        text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchClosed,
+        nextText: 12
       },
       {
-        text: 'Go to deck',
-        nextText: 12
+        text: 'Go to the deck',
+        requiredState: (currentState) => currentState.hatchOpen,
+        nextText: 29
       },
     ]
   },
@@ -431,7 +456,7 @@ const textNodes = [
     options: [
       {
         text: 'Take the hammer',
-        setState: {haveHammer: true, noHammer: false},
+        setState: { haveHammer: true, noHammer: false },
         nextText: 22
       },
       {
@@ -504,6 +529,7 @@ const textNodes = [
     options: [
       {
         text: 'Continue',
+        setState: { hatchOpen: true, hatchClosed: false },
         nextText: 29
       }
     ]
@@ -546,7 +572,7 @@ const textNodes = [
       },
       {
         text: 'Go to the second floor',
-        nextText: 12
+        nextText: 11
       },
       {
         text: 'Go to engine room',

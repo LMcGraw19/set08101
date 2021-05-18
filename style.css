@@ -300,3 +300,13 @@ body {
         width: 100%;
     }
 }
+
+@media screen and (max-width: 480px){
+    .column {
+        width: 100%;
+    }
+    .img-index{
+        width: 400px;
+        height: 400px;
+    }
+}
